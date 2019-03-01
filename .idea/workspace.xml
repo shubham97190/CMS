@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="347fc3f1-516b-442e-8f6d-7f1a8cd821f5" name="Default Changelist" comment="" />
+    <list default="true" id="347fc3f1-516b-442e-8f6d-7f1a8cd821f5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/category_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/category_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/category_image/image2019-02-25 11:18:36.576004.jpeg" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/category_manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-75">
-              <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+            <state relative-caret-position="75">
+              <caret line="123" column="79" selection-start-line="123" selection-start-column="79" selection-end-line="123" selection-end-column="79" />
               <folding>
                 <element signature="e#0#102#0" expanded="true" />
               </folding>
@@ -67,6 +72,9 @@
       <replace>slider</replace>
       <replace>slider_tbl</replace>
     </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -130,6 +138,7 @@
     <option name="width" value="1279" />
     <option name="height" value="701" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -363,7 +372,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32954547" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30357143" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30456027" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39935064" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -723,8 +732,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/category_manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-75">
-          <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+        <state relative-caret-position="75">
+          <caret line="123" column="79" selection-start-line="123" selection-start-column="79" selection-end-line="123" selection-end-column="79" />
           <folding>
             <element signature="e#0#102#0" expanded="true" />
           </folding>

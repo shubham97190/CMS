@@ -160,7 +160,8 @@ def edit():
                         delete(sld.config['UPLOAD_FOLDER'],old_image)
 
                     else:
-                       
+                        if 'pt' in request.form and request.form['pt'] == 'on':
+                            delete(sld.config['UPLOAD_FOLDER'], old_image)
                         sql = "update slider_tbl set title=%s , status=%s, " \
                             "modified_date=%s where id=%s"
                         val = (title,  ck, str(datetime.now()),  id,)

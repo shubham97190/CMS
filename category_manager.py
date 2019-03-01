@@ -115,15 +115,15 @@ def edit():
                 try:
                     my_db.connection()
                     if flag:
-                        print('djfhkfdhsj')
+
                         sql = "update category_tbl set title=%s,image=%s,modified_date=%s WHERE  id =%s"
-                        val = (title, name, str(datetime.now()), id,)
-                        if request.form['pt']:
-                            print("hdufcgsdh")
+                        val = (title, name, str(datetime.now()), id, )
+                        delete(cat.config['UPLOAD_FOLDER'], old_image)
+                    else:
+
+                        if 'pt' in request.form and request.form['pt'] == 'on':
                             delete(cat.config['UPLOAD_FOLDER'], old_image)
 
-                    else:
-                         print('djfhkfdhsj')
                         sql = "update category_tbl set title=%s,modified_date=%s WHERE  id =%s"
                         val = (title, str(datetime.now()), id, )
                     my_db.cur.execute(sql, val)
