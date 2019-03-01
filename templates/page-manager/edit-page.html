@@ -1,0 +1,119 @@
+{% extends 'layout.html' %}
+
+
+
+{% block header %}
+  <h1>{% block title %}edit-pages{% endblock %}</h1>
+{% endblock %}
+
+
+
+    {% block extra_css %}
+        <link href="{{ url_for('static', filename = 'css/style1.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename = 'css/summernote-bs4.css') }}" rel="stylesheet">
+    {% endblock %}
+
+
+
+    {% block extra_page_header %}
+        <div class="page-header">
+            <h2 class="pageheader-title">CMS</h2>
+            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+            <div class="page-breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Page manager</a></li>
+
+                        <li class="breadcrumb-item active" aria-current="page">Edit Pages</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    {% endblock %}
+
+
+
+    {% block content %}
+         <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+                  
+
+                        {% if myresults == None %}
+                          <div class="alert alert-danger alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+                              <h3>Page Not found !</h3>
+
+                            </div>
+
+                        {% else %}
+                               
+                           
+
+                           
+                            <div class="card">
+                                <h5 class="card-header">Page Manager</h5>
+                                <div class="card-body">
+                                    <form action="{{url_for('page.edit',id=myresults.id)}}" method="post">
+
+
+                                        <div class="form-group row">
+                                            <label for="title" class="col-12 col-sm-3 col-form-label text-sm-right">Title</label>
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                <input type="text"  placeholder="Title" name="title" id="title" class="form-control" value="{{myresults['title']}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                                <label for="title" class="col-12 col-sm-3 col-form-label text-sm-right">Slug</label>
+                                                <div class="col-12 col-sm-8 col-lg-6">
+                                                    <input type="text"  placeholder="slug" name="slug" id="slug" class="form-control" value="{{myresults['slug']}}">
+                                                </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="decs" class="col-12 col-sm-3 col-form-label text-sm-right">Description</label>
+                                            <div class="col-12 col-sm-8 col-lg-6 email editor col-form-label  p-0">
+                                                <textarea class="form-control" id="decs" name="decs" rows="6" >{{myresults['description']}}</textarea>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group row text-right">
+                                            <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                                                <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                                                <button class="btn btn-space btn-secondary" type="button" ><a href=""></a>Cancel</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                    </div>
+                    {% endif %}
+
+
+                <!-- ============================================================== -->
+                <!-- end form -->
+                <!-- ============================================================== -->
+        </div>
+
+    {% endblock %}
+
+
+
+    {% block extra_js %}
+    <script src="{{ url_for('static', filename = 'js/summernote-bs4.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+        $('#decs').summernote({
+            height: 300
+        });
+    });
+    </script>
+
+    {% endblock %}

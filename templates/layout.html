@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <title>{% block title %}{% endblock %} </title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}" >
+        <link href="{{ url_for('static', filename = 'css/cu_style .css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+        <link rel="stylesheet"  href="{{ url_for('static', filename = 'css/fontawesome-all.css') }}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        {% block extra_css %} {% endblock %}
+
+    </head>
+    <body>
+
+        <div class="dashboard-main-wrapper">
+            <div class="dashboard-header">
+                <nav class="navbar navbar-expand-lg bg-white fixed-top">
+                    <a class="navbar-brand" href="#">CMS</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto navbar-right-top">
+                            <li class="nav-item">
+                                <div id="custom-search" class="top-search-bar">
+                                    <input class="form-control" type="text" placeholder="Search..">
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown notification">
+                                <a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i> <span class="indicator"></span></a>
+                                <ul class="dropdown-menu dropdown-menu-right notification-dropdown">
+                                    <li>
+                                        <div class="notification-title"> Notification</div>
+                                        <div class="notification-list">
+                                            <div class="list-group">
+                                                <a href="#" class="list-group-item list-group-item-action active">
+                                                    <div class="notification-info">
+                                                        <div class="notification-list-user-img"><img src="" alt="" class="user-avatar-md rounded-circle"></div>
+                                                        <div class="notification-list-user-block"><span class="notification-list-user-name">Jeremy Rakestraw</span>accepted your invitation to join the team.
+                                                            <div class="notification-date">2 min ago</div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="list-footer"> <a href="#">View all notifications</a></div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown connection">
+                                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-th"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right connection-dropdown">
+                                    <li class="connection-list">
+
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                                <a href="#" class="connection-item"><img src="" alt=""> <span>Bitbucket</span></a>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                                <a href="#" class="connection-item"><img src="" alt="" ><span>Mail chimp</span></a>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 ">
+                                                <a href="#" class="connection-item"><img src="" alt="" > <span>Slack</span></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="conntection-footer"><a href="#">More</a></div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown nav-user">
+                                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle-o"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                                    <div class="nav-user-info">
+                                      <h5 class="mb-0 text-white nav-user-name"> {{sec.user_name}}</h5>
+                                        <span class="status"></span><span class="ml-2">Available</span>
+                                    </div>
+                                    <a class="dropdown-item" href="#"><i class="fa fa-user mr-2"></i></i>Account</a>
+                                    <a class="dropdown-item" href="#"><i class="fa fa-cog mr-2"></i>Setting</a>
+                                    <a class="dropdown-item" href="{{url_for('log.logout')}}"><i class="fa fa-power-off mr-2"></i>Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+<!--##########################include left slider ##################################################################################-->
+                    {% include 'template-parts/left.html' %}
+
+           <div class="dashboard-wrapper">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            {% block extra_page_header %} {% endblock %}
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+
+
+                    {% block content %} {% endblock %}
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <div class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            Copyright © 2018 Concept. All rights reserved. Dashboard by Shubham.
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="text-md-right footer-links d-none d-sm-block">
+                                <a href="">About</a>
+                                <a href="javascript: void(0);">Support</a>
+                                <a href="">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end footer -->
+            <!-- ============================================================== -->
+        </div>
+
+    </div>
+
+    
+
+    <script src="{{ url_for('static', filename = 'js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'js/bootstrap.bundle.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'js/main-js.js') }}"></script>
+    {% block extra_js %} {% endblock %}
+
+
+    </body>
+</html>

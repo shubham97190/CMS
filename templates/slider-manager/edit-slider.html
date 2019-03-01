@@ -1,0 +1,137 @@
+{% extends 'layout.html' %}
+
+
+
+{% block header %}
+  <h1>{% block title %}add-article{% endblock %}</h1>
+{% endblock %}
+
+
+
+    {% block extra_css %}
+        <link href="{{ url_for('static', filename = 'css/style1.css') }}" rel="stylesheet">
+        
+    {% endblock %}
+
+
+
+    {% block extra_page_header %}
+        <div class="page-header">
+            <h2 class="pageheader-title">CMS</h2>
+            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+            <div class="page-breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Article manager</a></li>
+
+                        <li class="breadcrumb-item active" aria-current="page">Add Article</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    {% endblock %}
+
+
+
+    {% block content %}
+         <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+                        {% if myresults == None %}
+                    <div class="alert alert-danger alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                              <h3>Slider Not Found</h3>
+
+                            </div>
+                            {% else %}
+                               
+                           
+                    
+                           
+                            <div class="card">
+                                <h5 class="card-header">Slider Manager</h5>
+                                <div class="card-body">
+                                       
+                                    <form action="{{url_for('sld_manager.edit',id=myresults.id)}}" method="post" enctype="multipart/form-data" >
+
+                                        <div class="form-group row">
+                                            <label for="title" class="col-12 col-sm-3 col-form-label text-sm-right">Title</label>
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                <input type="text"  placeholder="Title" name="title" id="title" class="form-control" value="{{myresults.title}}">
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label text-sm-right" id="status" data-id="{{myresults.status}}">Status</label>
+                                            <div class="col-sm-6">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control custom-radio">
+                                                        <input id="ck1" name="ck" type="radio" value="yes"  checked class="custom-control-input"><span class="custom-control-label">Yes </span>
+                                                    </label>
+                                                    <label class="custom-control custom-radio">
+                                                        <input id="ck" name="ck" type="radio" value="no"   class="custom-control-input"><span class="custom-control-label">No </span>
+                                                    </label>
+                                                    
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="image" class="col-12 col-sm-3 col-form-label text-sm-right">Image</label>
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                <input type="file" name="image" id="image" class="form-control">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                            <label for="image" class="col-12 col-sm-3 col-form-label text-sm-right">Image</label>
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                <input type="file" name="image" id="image" class="form-control">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row text-right">
+                                            <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                                                <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                                                <button class="btn btn-space btn-secondary">Cancel</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                    </div>
+                            
+                    {% endif %}
+
+                <!-- ============================================================== -->
+                <!-- end form -->
+                <!-- ============================================================== -->
+        </div>
+
+    {% endblock %}
+
+
+
+    {% block extra_js %}
+    <script>
+        jQuery(document).ready(function(){
+          
+            var status=jQuery('#status').attr('data-id');
+            if (status==='yes')
+                jQuery("#ck1").attr('checked', 'checked');
+            else
+                jQuery("#ck").attr('checked', 'checked');
+           
+        
+        });
+
+    </script>
+
+
+
+    {% endblock %}

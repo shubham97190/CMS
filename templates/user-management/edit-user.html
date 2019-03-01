@@ -1,0 +1,272 @@
+{% extends 'layout.html' %}
+
+
+
+{% block header %}
+  <h1>{% block title %}edit_user{% endblock %}</h1>
+{% endblock %}
+
+
+
+    {% block extra_css %}
+        <link href="{{ url_for('static', filename = 'css/style1.css') }}" rel="stylesheet">
+    {% endblock %}
+
+
+
+    {% block extra_page_header %}
+        <div class="page-header">
+            <h2 class="pageheader-title">CMS</h2>
+            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+            <div class="page-breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">User Management</a></li>
+
+                        <li class="breadcrumb-item active" aria-current="page">Edit User</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    {% endblock %}
+
+
+
+    {% block content %}
+         <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        {% if error %}
+                        <div class="alert alert-danger alert-dismissible">
+                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <h5>There were errors during Edit:</h5>
+                            <ul>
+                                {% for key, value in error.items() %}
+                                <li>
+                                      {{ value }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+
+                          </div>
+                          {% endif %}
+                         
+                    {% if myresults == None %}
+                          <div class="alert alert-danger alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+                              <h3>User Not found !</h3>
+
+                            </div>
+                    {% else %}
+                           
+                    <div class="card">
+                        <h5 class="card-header">Edit User</h5>
+                        <div class="card-body">
+
+                            <form method="POST" action="{{url_for('auth.edit',id= myresults.id)}}">
+                                <div class="row">
+
+
+                                    <input type="hidden" name="id" value="{{myresults.id}}">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="fname">First name</label>
+                                        <input type="text" class="form-control" id="fname" name="fname" placeholder="First name" value="{{myresults.first_name}}">
+
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="lname">Last name</label>
+                                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Last name"   value="{{myresults.last_name}}" >
+
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="uname">User name</label>
+                                        <input type="text" class="form-control" id="uname" name="uname" readonly  placeholder="User name"  onchange="check_user();"  value="{{myresults.user_name}}" >
+
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="email">E-mail</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="email" readonly name="email" placeholder="Email" aria-describedby="inputGroupPrepend" onchange="check_email();"  value="{{myresults.e_mail}}" >
+                                            <div class="invalid-feedback">
+                                                Please choose a username.
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="psw">Password</label>
+                                        <input type="password" class="form-control" id="psw" name="psw" placeholder="Password"   value="" >
+
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="c_psw">Confirm Password</label>
+                                        <input type="password" class="form-control" id="c_psw" name="c_psw" placeholder="Confirm Password"   value="" >
+
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="p_no">Phone Number</label>
+                                        <input type="text" class="form-control" id="p_no" name="p_no" placeholder="Phone Number"   value="{{myresults.contact}}" >
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-row">
+                                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                        <label for="country">Country</label>
+                                        <select class="form-control form-control-sm" id="country" name="country" onchange="myfunc();" data-id="{{myresults.country}}">
+                                            <option value="0" selected="selected">(please select a Country)</option>
+
+                                            {% for row in country %}
+                                                <option value="{{ row['id'] }}" >{{ row['name']}}</option>
+                                            {% endfor %}
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                        <label for="state">State</label>
+                                        <select class="form-control form-control-sm" id="state" name="state" onchange="getCity();"  data-id="{{myresults.state}}">
+                                            <option value="0" >(please select a State)</option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                        <label for="city">City</label>
+                                        <select class="form-control form-control-sm" id="city" name="city"  data-id="{{myresults.city}}" >
+                                            <option value="0" selected="selected">(please select a City)</option>
+
+                                        </select>
+
+                                    </div>
+
+
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                        <label for="pin">Pin Code</label>
+                                        <input type="text" class="form-control" id="pin" name="pin" placeholder="Pin Number"  value="{{myresults.pin}}" >
+
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                        <label for="address">Address</label>
+                                        <input type="text" class="form-control" id="address" name="address" placeholder=""  value="{{myresults.address}}" >
+
+                                    </div>
+
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" >
+                                                <label class="form-check-label" for="invalidCheck">
+                                                    Agree to terms and conditions
+                                                </label>
+                                                <div class="invalid-feedback">
+                                                    You must agree before submitting.
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <button class="btn btn-primary" type="submit" id="submit_btn_add">Update </button>
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                          {% endif %}
+                </div>
+
+                <!-- ============================================================== -->
+                <!-- end form -->
+                <!-- ============================================================== -->
+
+            </div>
+
+    {% endblock %}
+
+
+
+    {% block extra_js %}
+        <script src = "{{ url_for('static', filename = 'js/myajax.js') }}"></script>
+        <script>
+            jQuery(document).ready(function(){
+                var c_id=jQuery('#country').attr('data-id');
+                $('#country').val(c_id);
+                get_state_by_country_id(c_id);
+               
+           
+            });
+            function get_state_by_country_id(country_id){
+                $.ajax({
+                    url:'/get_state',
+                    data:{country:country_id},
+                    type:'GET',
+                    dataType:'json',
+                    success:function(response){
+                        if(response.type == 'get_state'){
+                            console.log(response.result);
+                            $("#state").html('');
+                            $("#state").append('<option value="0">(please select a State)</option>');
+                            $.each(response.result, function(key, val) {
+
+                                $("#state").append("<option value="+val['id']+">"+val['name']+"</option>");
+                            });
+                            var s_id=jQuery('#state').attr('data-id');
+                            $('#state').val(s_id);
+                            get_city_by_state_id(s_id);
+                        }
+                    },
+                    error:function(error){
+                        console.log(error);
+                    }
+                });
+            }
+
+            function get_city_by_state_id(state_id){
+                console.log(state_id);
+                $.ajax({
+                    url:'/get_city',
+                    data:{state:state_id},
+                    type:'GET',
+                    dataType:'json',
+                    success:function(response){
+                        if(response.type == 'get_city'){
+                            $("#city ").html('');
+                            $("#city").append('<option value="0">(please select a City)</option>');
+                            $.each(response.result, function(key, val) {
+                                $("#city ").append("<option value="+val['id']+">"+val['name']+"</option>");
+                            });
+                            var s_id=jQuery('#city').attr('data-id');
+                            $('#city').val(s_id);
+                        }
+                    },
+                    error:function(error){
+                        console.log(error);
+                    }
+                });
+            }   
+        </script>
+
+    {% endblock %}
