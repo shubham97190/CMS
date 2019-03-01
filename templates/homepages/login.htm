@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <link href="{{ url_for('static', filename = 'css/mystylee.css') }}" rel="stylesheet">
+
+
+  </head >
+
+  <body class="text-center" onbeforeunload="my">
+
+    <form class="form-signin"  method="POST" action="{{url_for('log.login_post')}}">
+      <div class="row justify-content-center" >
+        
+          <div id="error_id" >
+              {% if error %}
+            <div class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h5 >There were errors during Login:</h5>
+               
+                  <ul>
+                       {% for key, value in error.items() %}
+                      <li>
+                           {{ value }}
+                      </li>
+                      {% endfor %}
+                  </ul>
+
+
+               {% endif %}
+            </div>
+
+      </div>
+
+    </div>
+      <a class="nav-link" href="" style=" float: left;"><span ></span>Home</a>
+      <a class="nav-link" href="#" style=" float: right;"><span ></span>Registration</a>
+      <label for="email" class="sr-only">Email address</label>
+      <input type="text" id="email" name="email" class="form-control" placeholder="Email address"  autofocus>
+
+      <label for="psw" class="sr-only">Password</label>
+      <input type="password" id="psw" name="psw" class="form-control" placeholder="Password" >
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+
+      <button id="submit_btn" class="btn btn-lg btn-primary btn-block" type="submit" >Sign in</button>
+    </form>
+
+  </body>
+
+</html>

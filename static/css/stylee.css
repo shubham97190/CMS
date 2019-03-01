@@ -1,0 +1,38 @@
+body{
+    background: -webkit-linear-gradient(left, #d1e2f7, #b6e7f5);
+}
+
+button{
+    background-color: -webkit-linear-gradient(left, #ff1e00, #d9ff00);
+    border-radius: 25px;
+}
+
+
+button[type=submit]{
+    width: 50%;
+}
+
+button[type=reset]{
+    width: 25%;
+}
+input[type=text] {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 25px;
+
+}
+
+input[type=password] {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 25px;
+}
+
+.my{
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 25px;
+}
+ .error{
+    color: red;
+ }

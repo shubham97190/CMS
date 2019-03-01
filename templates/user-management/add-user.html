@@ -1,0 +1,207 @@
+{% extends 'layout.html' %}
+
+
+
+{% block header %}
+  <h1>{% block title %}add_user{% endblock %}</h1>
+{% endblock %}
+
+
+
+    {% block extra_css %}
+        <link href="{{ url_for('static', filename = 'css/style1.css') }}" rel="stylesheet">
+    {% endblock %}
+
+
+
+    {% block extra_page_header %}
+        <div class="page-header">
+            <h2 class="pageheader-title">CMS</h2>
+            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+            <div class="page-breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">User Management</a></li>
+
+                        <li class="breadcrumb-item active" aria-current="page">Add User</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    {% endblock %}
+
+
+
+    {% block content %}
+         <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+                    {% if error %}
+                          <div class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                              <h5>There were errors during registration:</h5>
+                              <ul>
+                                  {% for key, value in error.items() %}
+                                  <li>
+                                        {{ value }}
+                                  </li>
+                                  {% endfor %}
+                              </ul>
+
+
+                            </div>
+                            {% else %}
+                                {% with messages = get_flashed_messages() %}
+                                        {% if messages|length > 0 %}
+                                             <div class="alert alert-success alert-dismissible">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                <h2>{{messages}}</h2>
+                                            </div>
+                                        {% endif %}
+                                {% endwith %}
+                            {% endif %}
+
+                    <div class="card">
+                        <h5 class="card-header">Add user</h5>
+                        <div class="card-body">
+                            <form id="myform" action="" method="post">
+                                <div class="row">
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="fname">First name</label>
+                                        <input type="text" class="form-control" id="fname" name="fname" placeholder="First name" value="{{  val['f_name']}}" >
+
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="lname">Last name</label>
+                                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Last name" value="{{val['l_name']}}" >
+
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="uname">User name</label>
+                                        <input type="text" class="form-control" id="uname" name="uname" placeholder="User name" value="{{val['u_name']}}" onchange="check_user();">
+
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="email">E-mail</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="email" name="email" placeholder="Email" aria-describedby="inputGroupPrepend" value="{{ val['email'] }}" onchange="check_email();">
+                                            <div class="invalid-feedback">
+                                                Please choose a username.
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="psw">Password</label>
+                                        <input type="password" class="form-control" id="psw" name="psw" placeholder="Password" value="{{val['passwd']}}" >
+
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="c_psw">Confirm Password</label>
+                                        <input type="password" class="form-control" id="c_psw" name="c_psw" placeholder="Confirm Password"  value="{{val['c_passwd']}}">
+
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <label for="p_no">Phone Number</label>
+                                        <input type="text" class="form-control" id="p_no" name="p_no" placeholder="Phone Number" value="{{val['contact']}}" >
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                        <label for="country">Country</label>
+                                        <select class="form-control form-control-sm" id="country" name="country" onchange="myfunc();">
+                                            <option value="0" selected="selected">(please select a Country)</option>
+                                            {% for row in myresult %}
+                                                <option value="{{ row['id'] }}" >{{ row['name']}}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                        <label for="state">State</label>
+                                        <select class="form-control form-control-sm" id="state" name="state" onchange="getCity();">
+                                            <option value="0" selected="selected">(please select a State)</option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                        <label for="city">City</label>
+                                        <select class="form-control form-control-sm" id="city" name="city">
+                                            <option value="0" selected="selected">(please select a City)</option>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                        <label for="pin">Pin Code</label>
+                                        <input type="text" class="form-control" id="pin" name="pin" placeholder="Pin Number" value="{{val['pin']}}">
+
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mb-2">
+                                        <label for="address">Address</label>
+                                        <input type="text" class="form-control" id="address" name="address" placeholder="Street address, P.O. box, Land Mark, Floor, House No." value="{{val['address']}}">
+
+                                    </div>
+
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" >
+                                                <label class="form-check-label" for="invalidCheck">
+                                                    Agree to terms and conditions
+                                                </label>
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                        <button class="btn btn-primary" type="submit" id="submit_btn_add">Submit form</button>
+                                        <button class="btn btn-danger" type="reset" id="submit_btn_clear">Clear</button>
+
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ============================================================== -->
+                <!-- end form -->
+                <!-- ============================================================== -->
+            </div>
+
+    {% endblock %}
+
+
+
+    {% block extra_js %}
+        <script src = "{{ url_for('static', filename = 'js/myajax.js') }}"></script>
+    {% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title>Home</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+         <link rel="stylesheet" href="{{ url_for('static', filename = 'homestylee.css') }} ">
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="collapse navbar-collapse" href="#"> <img src="{{ url_for('static', filename = 'logo.gif') }}" alt="CMS" style="width:50px;height:50px;"> </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="{{url_for('about')}}">About</a></li>
+                <li><a href="{{url_for('contact')}}">Contact</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{url_for('auth.registers')}}"><span class="glyphicon glyphicon-registration-mark"></span> Registration</a></li>
+                <li><a href="{{url_for('auth.index')}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div class="container-fluid text-center">
+          <div class="row content">
+            <div class="col-sm-2 sidenav">
+            </div>
+            <div class="col-sm-8 text-left">
+                <h1>This is home </h1>
+            </div>
+            <div class="col-sm-2 sidenav">
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <footer class="container-fluid text-center">
+              <div id="contact" >
+              <h2 class="text-center">CONTACT</h2>
+              <div class="row">
+                <div class="col-sm-5">
+                  <p>Contact us and we'll get back to you within 24 hours.</p>
+                  <p><span class="glyphicon glyphicon-map-marker"></span>Jaipur,India</p>
+                  <p><span class="glyphicon glyphicon-phone"></span> +91 9899657283 </p>
+                  <p><span class="glyphicon glyphicon-envelope"></span> shubham@gmail.com</p>
+                </div>
+                <div class="col-sm-7 slideanim">
+                  <div class="row">
+                    <div class="col-sm-6 form-group">
+                      <input class="form-control" id="name" name="name" placeholder="Name" type="text" >
+                    </div>
+                    <div class="col-sm-6 form-group">
+                      <input class="form-control" id="email" name="email" placeholder="Email" type="email" >
+                    </div>
+                  </div>
+                  <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+                  <div class="row">
+                    <div class="col-sm-12 form-group">
+                      <button class="btn btn-default pull-right" type="submit">Send</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </footer>
+
+    </body>
+
+</html>

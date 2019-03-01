@@ -1,0 +1,165 @@
+{% extends 'layout.html' %}
+
+
+
+{% block header %}
+  <h1>{% block title %}add-article{% endblock %}</h1>
+{% endblock %}
+
+
+
+    {% block extra_css %}
+        <link href="{{ url_for('static', filename = 'css/style1.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename = 'css/summernote-bs4.css') }}" rel="stylesheet">
+    {% endblock %}
+
+
+
+    {% block extra_page_header %}
+        <div class="page-header">
+            <h2 class="pageheader-title">CMS</h2>
+            <p class="pageheader-text">Proin placerat ante duiullam scelerisque a velit ac porta, fusce sit amet vestibulum mi. Morbi lobortis pulvinar quam.</p>
+            <div class="page-breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Article manager</a></li>
+
+                        <li class="breadcrumb-item active" aria-current="page">Add Article</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    {% endblock %}
+
+
+
+    {% block content %}
+         <div class="row">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+                    {% if error %}
+                    <div class="alert alert-danger alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                              <h5>There were errors during registration:</h5>
+                              <ul>
+                                  {% for key, value in error.items() %}
+                                  <li>
+                                        {{ value }}
+                                  </li>
+                                  {% endfor %}
+                              </ul>
+
+
+                            </div>
+                            {% else %}
+                                {% with messages = get_flashed_messages() %}
+                                        {% if messages|length > 0 %}
+                                             <div class="alert alert-success alert-dismissible">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                <h2>{{messages}}</h2>
+                                            </div>
+                                        {% endif %}
+                                {% endwith %}
+                            {% endif %}
+
+                    
+                           
+                            <div class="card">
+                                <h5 class="card-header">Article Manager</h5>
+                                <div class="card-body">
+                                    <form action="/admin/article/add_article" method="post" enctype="multipart/form-data" >
+                                        
+                                        <div class="form-group row">
+                                            <label for="title" class="col-12 col-sm-3 col-form-label text-sm-right">Category-Title</label>
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                <select class="form-control form-control-sm" id="cat_id" name="cat_id">
+                                                    <option value="0" selected="selected">(Select Category)</option>
+                                                    {% for row in myresults %}
+                                                        <option value="{{ row['id'] }}" >{{ row.title}}</option>
+                                                     {% endfor %}
+        
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="title" class="col-12 col-sm-3 col-form-label text-sm-right">Title</label>
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                <input type="text"  placeholder="Title" name="title" id="title" class="form-control" value="{{val['title']}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="decs" class="col-12 col-sm-3 col-form-label text-sm-right">Description</label>
+                                            <div class="col-12 col-sm-8 col-lg-6 email editor col-form-label  p-0">
+                                                <textarea class="form-control" id="decs" name="decs" rows="6" >{{ val['description'] }}</textarea>
+                                            
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label text-sm-right">Status</label>
+                                            <div class="col-sm-6">
+                                                <div class="custom-controls-stacked">
+                                                    <label class="custom-control custom-radio">
+                                                        <input id="ck1" name="ck" type="radio" value="yes"  checked class="custom-control-input"><span class="custom-control-label">Yes </span>
+                                                    </label>
+                                                    <label class="custom-control custom-radio">
+                                                        <input id="ck" name="ck" type="radio" value="no"   class="custom-control-input"><span class="custom-control-label">No </span>
+                                                    </label>
+                                                    
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="image" class="col-12 col-sm-3 col-form-label text-sm-right">Image</label>
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                <input type="file" name="image" id="image" class="form-control">
+                                            </div>
+                                        </div>
+                             
+                                        <div class="form-group row">
+                                            <label for="f_load" class="col-12 col-sm-3 col-form-label text-sm-right">File Upload</label>
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                <input type="file" name="f_load" id="f_load" class="form-control">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row text-right">
+                                            <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                                                <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                                                <button class="btn btn-space btn-secondary">Cancel</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                    </div>
+                            
+
+                <!-- ============================================================== -->
+                <!-- end form -->
+                <!-- ============================================================== -->
+        </div>
+
+    {% endblock %}
+
+
+
+    {% block extra_js %}
+    <script src="{{ url_for('static', filename = 'js/summernote-bs4.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+        $('#decs').summernote({
+            height: 300
+        });
+    });
+    </script>
+
+    {% endblock %}
