@@ -86,11 +86,18 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="form-group row">
-                                            <label for="image" class="col-12 col-sm-3 col-form-label text-sm-right">Image</label>
-                                            <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="file" name="image" id="image" class="form-control">
+                                        <div class="form-row">
+                                            <div class="col-12 col-sm-3 col-form-label text-sm-right form-group form-check">
+                                                        
+                                                <input class="form-check-input" type="checkbox" name="pt" id="pt" >
+                                                <label class="form-check-label" > permanent Delete </label>
+        
                                             </div>
+        
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                    <img  src="{{ url_for('sld_manager.get_slider_image_path', filename=myresults.image) }}" style="width: 450px; height: 50px;">
+                                            </div>
+        
                                         </div>
                                         
                                         <div class="form-group row text-right">

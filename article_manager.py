@@ -154,6 +154,7 @@ def edit():
             if myresult is not  None:
                 old_image = myresult['image']
                 old_file = myresult['file_upload']
+                print("old",old_file)
             my_db.conn.commit()
         except mysql.connector.Error as err:
             print(err)
@@ -222,6 +223,14 @@ def edit():
                         delete(art.config['UPLOAD_FOLDER'], old_file)
 
                     else:
+                        if 'pt' in request.form and request.form['pt'] == 'on':
+
+                            delete(art.config['UPLOAD_FOLDER'], old_image)
+                        if 'pt_file' in request.form and request.form['pt_file'] == 'on':
+                            
+                            delete(art.config['UPLOAD_FOLDER'], old_file)
+
+
                         sql = "update article_tbl set title=%s , description=%s, status=%s, " \
                             "modified_date=%s, categary_id=%s where id=%s"
                         val = (title, decs, ck, str(datetime.now()), cat_id, id,)

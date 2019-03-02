@@ -112,11 +112,38 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-row">
+                                            <div class="col-12 col-sm-3 col-form-label text-sm-right form-group form-check">
+                                                        
+                                                <input class="form-check-input" type="checkbox" name="pt" id="pt" >
+                                                <label class="form-check-label" > permanent Delete </label>
+        
+                                            </div>
+        
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                    <img  src="{{ url_for('art_manager.get_article_image_path', filename=myresults.image) }}" style="width: 450px; height: 50px;">
+                                            </div>
+        
+                                        </div>
+
                                         <div class="form-group row">
                                             <label for="f_load" class="col-12 col-sm-3 col-form-label text-sm-right">File Upload</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
                                                 <input type="file" name="f_load" id="f_load" class="form-control">
                                             </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-12 col-sm-3 col-form-label text-sm-right form-group form-check">
+                                                        
+                                                <input class="form-check-input" type="checkbox" name="pt_file" id="pt_file" >
+                                                <label class="form-check-label" > permanent Delete </label>
+        
+                                            </div>
+        
+                                            <div class="col-12 col-sm-8 col-lg-6">
+                                                    <img  src="{{ url_for('art_manager.get_article_image_path', filename=myresults.file_upload) }}" style="width: 450px; height: 50px;">
+                                            </div>
+        
                                         </div>
 
                                         <div class="form-group row text-right">
