@@ -115,7 +115,6 @@ def edit():
                 try:
                     my_db.connection()
                     if flag:
-<<<<<<< HEAD
 
                         sql = "update category_tbl set title=%s,image=%s,modified_date=%s WHERE  id =%s"
                         val = (title, name, str(datetime.now()), id, )
@@ -125,18 +124,16 @@ def edit():
                         if 'pt' in request.form and request.form['pt'] == 'on':
                             delete(cat.config['UPLOAD_FOLDER'], old_image)
 
-=======
-                        print('djfhkfdhsj')
                         sql = "update category_tbl set title=%s,image=%s,modified_date=%s WHERE  id =%s"
                         val = (title, name, str(datetime.now()), id,)
                         if request.form['pt']:
-                            print("hdufcgsdh")
+
                             delete(cat.config['UPLOAD_FOLDER'], old_image)
 
-                    else:
->>>>>>> f8bb66c923fe61a90df16250303d79de7079e6ab
-                        sql = "update category_tbl set title=%s,modified_date=%s WHERE  id =%s"
-                        val = (title, str(datetime.now()), id, )
+                        else:
+                            sql = "update category_tbl set title=%s,modified_date=%s WHERE  id =%s"
+                            val = (title, str(datetime.now()), id, )
+
                     my_db.cur.execute(sql, val)
                     my_db.conn.commit()
 
@@ -177,8 +174,7 @@ def category_delete():
 
 @cat_manager.route('/uploads/category_image/<filename>')
 def get_category_image_path(filename):
-<<<<<<< HEAD
+
     return uploaded(cat.config['UPLOAD_FOLDER'], filename)
-=======
-    return uploaded(cat.config['UPLOAD_FOLDER'], filename)
->>>>>>> f8bb66c923fe61a90df16250303d79de7079e6ab
+
+
