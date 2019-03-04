@@ -11,6 +11,7 @@ def add_user():
     if 'username' in session:
         error = {}
         val={}
+
         if request.method == 'POST':
             f_name = request.form['fname']
             l_name = request.form['lname']
