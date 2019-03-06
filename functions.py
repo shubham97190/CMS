@@ -5,6 +5,7 @@ from flask import send_from_directory
 from datetime import datetime
 import smtplib
 import my_db
+from flask import json
 
 def lower_error(password):
     return re.search(r"[a-z]", password)
@@ -61,8 +62,8 @@ def send_email(subject, msg, email_reciver):
     message = 'subject : {} \n\n {}'.format(subject, msg)
     server.sendmail('projectcms.2019dotsquares@gmail.com', email_reciver, message)
     server.quit()
-  except:
-    print("problem")
+  except Exception as err:
+    print(err)
 
 
 def get_conutry():
@@ -88,3 +89,37 @@ def slug(text, delim=u'-'):
             result.append(word)
 
     return delim.join(result)
+
+
+def retrive(tables):
+    myresult=""
+    try:
+        my_db.connection()
+        sql = "select * from "+tables  # +" where id=17"
+        #  val = (tables,)
+        my_db.cur.execute(sql)
+        myresult = my_db.cur.fetchall()
+
+    except Exception as err:
+        print(err)
+        my_db.conn.rollback()
+    finally:
+        my_db.conn.close()
+    return myresult
+
+
+def filter_article(id):
+    myresult = ""
+    try:
+        my_db.connection()
+        sql = "select * from  article_tbl where categary_id=%s" # +" where id=17"
+        val = (id,)
+        my_db.cur.execute(sql,val)
+        myresult = my_db.cur.fetchall()
+
+    except Exception as err:
+        print(err)
+        my_db.conn.rollback()
+    finally:
+        my_db.conn.close()
+    return json.dumps({"type": "fliter", "result":  myresult})

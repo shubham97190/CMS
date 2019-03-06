@@ -26,7 +26,9 @@
               <ul class="nav navbar-nav">
                 <li><a href="{{url_for('home')}}">Home</a></li>
                 <li  class="active"><a href="#">About</a></li>
+                <li><a href="{{url_for('article')}}">Article</a></li>
                 <li><a href="{{url_for('contact')}}">Contact</a></li>
+
               </ul>
                <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-registration-mark"></span> Registration</a></li>
@@ -36,12 +38,15 @@
           </div>
         </nav>
 
-        <div class="container-fluid text-center">
+        <div class="container-fluid text-center ">
           <div class="row content">
             <div class="col-sm-2 sidenav">
             </div>
             <div class="col-sm-8 text-left">
-                <h1>This is About </h1>
+                <h1>About us </h1>
+                {% for row in myresults %}
+                <div class="lod" data-id="{{row.description}}"></div>
+                {% endfor %}
             </div>
             <div class="col-sm-2 sidenav">
 
@@ -83,5 +88,13 @@
         </footer>
 
     </body>
+    <script>
+        jQuery(document).ready(function(){
+             $('.lod').each(function (value) {
+                //console.log('.lod' + index + ':' + $(this).attr('data-id'));
+                jQuery(this).html($(this).attr('data-id'));
+            });
+        });
+    </script>
 
 </html>
