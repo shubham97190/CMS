@@ -153,7 +153,7 @@ def edit():
                     my_db.connection()
                    
                     if flag:
-                        print("flag")
+                        
                         sql = "update slider_tbl set title=%s ,image=%s, status=%s, " \
                             "modified_date=%s where id=%s"
                         val = (title, image,  ck, str(datetime.now()), id,)

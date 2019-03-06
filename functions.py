@@ -67,7 +67,7 @@ def send_email(subject, msg, email_reciver):
 
 
 def get_conutry():
-    myresult = "na"
+    myresult = ""
     try:
         my_db.connection()
         my_db.cur.execute("SELECT * FROM countries")

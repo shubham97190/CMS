@@ -164,7 +164,7 @@ def check_email():
 @auth.route('/get_state', methods=['POST', 'GET'])
 def get_state():
 
-    myresult = "na"
+    myresult = ""
     country = request.args.get('country')
     val = (country, )
     try:

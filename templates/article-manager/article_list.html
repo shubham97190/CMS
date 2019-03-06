@@ -80,7 +80,7 @@
 
                                         <td>{{sece.title}}</td>
                                         <td class="lod" data-id="{{sece.description}}"></td>
-                                        <td><img class="min_and_max" src="{{ url_for('art_manager.get_article_image_path', filename=sece.image) }}"></td>
+                                        <td><img class="min_and_max" src="{{ url_for('art_manager.get_article_image_path', filename=sece.image) }}"style="width: 2280px; height: 150px;"></td>
                                         <td>{{sece.status}}</td>
                                         <td>
                                             <a title="Edit Record" class="btn btn-info btn-circle" href="{{url_for('art_manager.edit',id=sece.id)}}" >

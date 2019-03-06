@@ -24,8 +24,8 @@ app.register_blueprint(log)
 app.register_blueprint(page)
 app.register_blueprint(sld_manager)
 
-'''app.secret_key = os.urandom(12)'''
-app.secret_key = "b'\x95\x12Y\x97\xcd\x07>\x00J\xcc\x91\x17'"
+app.secret_key = os.urandom(12)
+'''app.secret_key = "b'\x95\x12Y\x97\xcd\x07>\x00J\xcc\x91\x17'"'''
 
 
 @app.route('/')
