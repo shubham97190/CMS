@@ -68,17 +68,16 @@ def add_article():
             if decs == "":
                 error['decs'] = "Description is empty"
 
-            if request.files:
-                for d in request.files:
-
-                   if d == 'image':
-                       fileupload = request.files['image']
-                   else:
-                       error['img_error'] = "Image is empty"
-                   if d == 'f_load':
-                       files = request.files['f_load']
-                   else:
-                       error['file_error'] = "File is empty"
+            if 'image' in request.files:
+                fileupload = request.files['image'] 
+                
+            else:
+                error['img_error'] = "Image is empty"
+                
+            if 'f_load' in request.files:
+                files = request.files['f_load']
+            else:
+                error['file_error'] = "File is empty"
 
             if len(error) == 0:
                 image = ""

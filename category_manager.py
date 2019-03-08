@@ -63,7 +63,8 @@ def add_category():
 
                     flash('Category has been added successfully!')
                     return redirect(url_for('cat_manager.category_list'))
-                except:
+                except Exception as err:
+                    print(err)
                     my_db.conn.rollback()
                 finally:
                     my_db.conn.close()
