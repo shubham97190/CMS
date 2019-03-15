@@ -1,8 +1,9 @@
-from flask import render_template, request, json, redirect, flash, url_for, Blueprint, session, Flask
+from flask import render_template, request, json, redirect, flash, url_for, Blueprint, session
 from datetime import datetime
 import my_db
 import mysql.connector
 from functions import slug
+from math import ceil
 
 page = Blueprint('page', __name__)
 
@@ -59,19 +60,29 @@ def add_page():
 @page.route('/admin/page/page-list', methods=['POST', 'GET'])
 def page_list():
     if 'username' in session:
-        myresult = ''
+        total_page = 0
         try:
+            page = request.args.get('page')
             my_db.connection()
-            sql = "SELECT * FROM page_tbl "
-            my_db.cur.execute(sql)
-            myresult = my_db.cur.fetchall()
 
+            sql = "SELECT count(id) FROM page_tbl "
+            my_db.cur.execute(sql)
+            total_row = my_db.cur.fetchall()
+
+            no_of_row = total_row[0]['count(id)']
+            page_size = 2
+            total_page = ceil(no_of_row / page_size)
+            starting_row = page_size * int(page)
+
+            my_db.cur.execute("SELECT * FROM page_tbl LIMIT " + str(page_size) + " OFFSET " + str(starting_row))
+
+            myresult = my_db.cur.fetchall()
         except mysql.connector.Error as err:
             print(err)
             my_db.conn.rollback()
         finally:
             my_db.conn.close()
-        return render_template('/page-manager/page_list.html',sec=session['username'],  myresult=myresult)
+        return render_template('/page-manager/page_list.html',sec=session['username'],  myresult=myresult, total_page=total_page)
     return render_template('/homepages/login.htm')
 
 

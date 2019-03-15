@@ -4,7 +4,7 @@ from datetime import datetime
 import my_db
 import mysql.connector
 from functions import uploaded, delete, file_upload
-
+from math import  ceil
 sld_manager = Blueprint('sld_manager', __name__)
 UPLOAD_FOLDER = os.path.expandvars('./uploads/slider_image')
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -16,10 +16,22 @@ sld.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def silder_list():
     if 'username' in session:
         myresult = ""
+        total_page = 0
         try:
+            page = request.args.get('page')
             my_db.connection()
-            sql = "SELECT * FROM slider_tbl "
+
+            sql = "SELECT count(id) FROM slider_tbl "
             my_db.cur.execute(sql)
+            total_row = my_db.cur.fetchall()
+
+            no_of_row = total_row[0]['count(id)']
+            page_size = 2
+            total_page = ceil(no_of_row / page_size)
+            starting_row = page_size * int(page)
+
+            my_db.cur.execute("SELECT * FROM slider_tbl LIMIT " + str(page_size) + " OFFSET " + str(starting_row))
+
             myresult = my_db.cur.fetchall()
         except:
 
@@ -27,7 +39,7 @@ def silder_list():
         finally:
             my_db.conn.close()
         
-        return render_template('/slider-manager/list-slider.html', sec=session['username'], myresult=myresult)
+        return render_template('/slider-manager/list-slider.html', sec=session['username'], myresult=myresult, total_page=total_page)
     return render_template('homepages/login.htm')
 
 

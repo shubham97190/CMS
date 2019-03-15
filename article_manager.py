@@ -1,8 +1,8 @@
 from flask import render_template, request, json, redirect, flash, url_for, Blueprint, session, Flask
 import os
+from math import ceil
 from datetime import datetime
 import my_db
-import mysql.connector
 from functions import uploaded, delete, file_upload
 
 art_manager = Blueprint('art_manager', __name__)
@@ -31,17 +31,30 @@ def category():
 def article_list():
     if 'username' in session:
         myresult = ""
+        total_page = 0
         try:
+            page = request.args.get('page')
             my_db.connection()
-            sql = "SELECT * FROM article_tbl "
-            my_db.cur.execute(sql)
-            myresult = my_db.cur.fetchall()
-        except:
 
+            sql = "SELECT count(id) FROM article_tbl "
+            my_db.cur.execute(sql)
+            total_row = my_db.cur.fetchall()
+
+            no_of_row = total_row[0]['count(id)']
+            page_size = 2
+            total_page = ceil(no_of_row/page_size)
+            starting_row = page_size*int(page)
+
+            my_db.cur.execute("SELECT * FROM article_tbl LIMIT "+str(page_size)+" OFFSET "+str(starting_row))
+
+            myresult = my_db.cur.fetchall()
+        except Exception as err:
+            print(err)
             my_db.conn.rollback()
         finally:
             my_db.conn.close()
-        return render_template('/article-manager/article_list.html', sec=session['username'], myresult=myresult)
+        return render_template('/article-manager/article_list.html', sec=session['username'], myresult=myresult,
+                               total_page=total_page)
     return render_template('homepages/login.htm')
 
 
@@ -101,7 +114,7 @@ def add_article():
                     flash('Article has been added successfully!')
                     return redirect(url_for('art_manager.article_list'))
 
-                except mysql.connector.Error as err:
+                except Exception as err:
                     print(err)
                     my_db.conn.rollback()
                 finally:
@@ -127,7 +140,7 @@ def article_delete():
 
         my_db.cur.execute(sql, val)
         my_db.conn.commit()
-    except mysql.connector.Error as err:
+    except Exception as err:
         print(err)
         my_db.conn.rollback()
 
@@ -155,7 +168,7 @@ def edit():
                 old_file = myresult['file_upload']
                 print("old",old_file)
             my_db.conn.commit()
-        except mysql.connector.Error as err:
+        except Exception as err:
             print(err)
             my_db.conn.rollback()
 
@@ -239,7 +252,7 @@ def edit():
 
                     flash('Article has been updated successfully!')
                     return redirect(url_for('art_manager.article_list'))
-                except mysql.connector.Error as err:
+                except Exception as err:
                     print(err)
                     my_db.conn.rollback()
                 finally:

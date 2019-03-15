@@ -1,6 +1,9 @@
 import my_db
-from functions import lower_error,upcase_error,hash_password,digit_error,symbol_error, email_error,get_conutry
-from flask import session, render_template, request, redirect, url_for, Blueprint, json, flash, make_response
+from math import ceil
+from functions import lower_error, upcase_error, hash_password, digit_error,\
+    symbol_error, email_error, get_conutry, send_email
+from flask import session, render_template, request, redirect,\
+    url_for, Blueprint, json, flash
 import mysql.connector
 
 auth = Blueprint('auth', __name__)
@@ -111,13 +114,14 @@ def add_user():
 
                     flash('User has been added successfully!')
                     return redirect(url_for('auth.list_user'))
-                except:
-
+                except Exception as err:
+                    print(err)
                     my_db.conn.rollback()
                 finally:
                     my_db.conn.close()
 
-        return render_template('/user-management/add-user.html', error=error, myresult=get_conutry(), sec=session['username'], val=val)
+        return render_template('/user-management/add-user.html', error=error, myresult=get_conutry(),
+                               sec=session['username'], val=val)
     return render_template('homepages/login.htm')
 
 
@@ -205,22 +209,30 @@ def check_user():
 def list_user():
     if 'username' in session:
         myresult = "na"
+        total_page = 0
         try:
+            page = request.args.get('page')
             my_db.connection()
-            my_db.cur.execute("SELECT count(*) FROM reg_tbl")
-            total_row=my_db.cur.fetchall()
-            # dict(total_row)
-            print(type(total_row),len(total_row) ,total_row )  
-            my_db.cur.execute("SELECT * FROM reg_tbl LIMIT 2 OFFSET 1")
+
+            sql = "SELECT count(id) FROM reg_tbl "
+            my_db.cur.execute(sql)
+            total_row = my_db.cur.fetchall()
+
+            no_of_row = total_row[0]['count(id)']
+            page_size = 2
+            total_page = ceil(no_of_row / page_size)
+            starting_row = page_size * int(page)
+
+            my_db.cur.execute("SELECT * FROM reg_tbl LIMIT " + str(page_size) + " OFFSET " + str(starting_row))
+
             myresult = my_db.cur.fetchall()
-            # print(total_row)
         except Exception as err:
             print(err)
             my_db.conn.rollback()
 
         finally:
             my_db.conn.close()
-        return render_template('/user-management/user-list.html', myresult=myresult, sec=session['username'])
+        return render_template('/user-management/user-list.html', myresult=myresult, sec=session['username'],total_page=total_page)
     return render_template('homepages/login.htm')
 
 
@@ -234,8 +246,8 @@ def delete():
         my_db.cur.execute(sql, val)
 
         my_db.conn.commit()
-    except:
-
+    except Exception as err:
+        print(err)
         my_db.conn.rollback()
 
     finally:
@@ -255,9 +267,9 @@ def edit():
                 val = (id,)
                 my_db.cur.execute(sql, val)
                 myresult = my_db.cur.fetchone()
-               
-                
-                return render_template('user-management/edit-user.html', sec=session['username'], myresults=myresult, country=get_conutry())
+
+                return render_template('user-management/edit-user.html', sec=session['username'],
+                                       myresults=myresult, country=get_conutry())
             except mysql.connector.Error as err:
                 my_db.conn.rollback()
 

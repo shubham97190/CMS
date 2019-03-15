@@ -96,12 +96,16 @@
                                 </tbody>
 
                             </table>
-                            <a title="Previous" class="previous btn btn-circle" href="javascript: void(0);" data-id="">
+                            {%if request.args.get('page') != '0'%}
+                            <a title="Previous" class="previous btn btn-circle" href="{{url_for('sld_manager.silder_list',page=0)}}" data-id="">
                                 <h1>&lt;</h1>
                             </a>
-                            <a title="Next" class="next btn btn-circle" href="javascript: void(0);" data-id="">
+                            {%endif%}
+                            {%if request.args.get('page') != 'total_page'%}
+                            <a title="Next" class="next btn btn-circle" href="{{url_for('sld_manager.silder_list',page=0)}}" data-id="">
                                 <h1>&gt;</h1>
                             </a>
+                            {%endif%}
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ from datetime import datetime
 import my_db
 import mysql.connector
 from functions import uploaded, delete, file_upload
+from math import ceil
 
 cat = Flask(__name__)
 cat_manager = Blueprint('cat_manager', __name__)
@@ -16,15 +17,22 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc', 'csv
 def category_list():
     if 'username' in session:
         myresult = ''
+        total_page = 0
         try:
+            page = request.args.get('page')
             my_db.connection()
-            sql = "SELECT * FROM category_tbl "
+
+            sql = "SELECT count(id) FROM category_tbl "
             my_db.cur.execute(sql)
-            # total_row = my_db.cur.rowcount
-            # print("ujfyearuifgewfkjai           ",total_row) 
-            # my_db.conn.commit()
-            
-            # my_db.cur.execute("SELECT * FROM category_tbl")
+            total_row = my_db.cur.fetchall()
+
+            no_of_row = total_row[0]['count(id)']
+            page_size = 2
+            total_page = ceil(no_of_row / page_size)
+            starting_row = page_size * int(page)
+
+            my_db.cur.execute("SELECT * FROM category_tbl LIMIT " + str(page_size) + " OFFSET " + str(starting_row))
+
             myresult = my_db.cur.fetchall()
 
         except mysql.connector.Error as err:
@@ -32,7 +40,8 @@ def category_list():
             my_db.conn.rollback()
         finally:
             my_db.conn.close()
-        return render_template('/category-manager/category-list.html', sec=session['username'], myresult=myresult)
+        return render_template('/category-manager/category-list.html', sec=session['username'],
+                               myresult=myresult,total_page=total_page)
     return render_template('homepages/login.htm')
 
 

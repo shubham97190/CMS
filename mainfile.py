@@ -8,9 +8,6 @@ from page_manager import page
 from slider_manager import sld_manager
 from functions import retrive
 
-import my_db
-
-
 app = Flask(__name__)
 
 app.register_blueprint(auth)

@@ -54,6 +54,7 @@ def file_upload(folder, file_up):
 
 
 def send_email(subject, msg, email_reciver):
+
   try:
     server = smtplib.SMTP('smtp.gmail.com:587')
     server.ehlo()
