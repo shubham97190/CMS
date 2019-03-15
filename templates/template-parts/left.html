@@ -30,7 +30,7 @@
                             <div id="submenu-2" class="collapse submenu"  >
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{url_for('auth.list_user')}}">List Users <span class="badge badge-secondary">New</span></a>
+                                        <a class="nav-link" href="{{url_for('auth.list_user',page=0)}}">List Users <span class="badge badge-secondary">New</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{url_for('auth.add_user')}}">Add New Users</a>
@@ -47,7 +47,7 @@
                             <div id="submenu-3" class="collapse submenu"  >
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{url_for('cat_manager.category_list')}}">List Category<span class="badge badge-secondary">New</span></a>
+                                        <a class="nav-link" href="{{url_for('cat_manager.category_list',page=0)}}">List Category<span class="badge badge-secondary">New</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{url_for('cat_manager.add_category')}}">Add New Category</a>
@@ -64,7 +64,7 @@
                             <div id="submenu-4" class="collapse submenu"  >
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{url_for('art_manager.article_list')}}">List Article<span class="badge badge-secondary">New</span></a>
+                                        <a class="nav-link" href="{{url_for('art_manager.article_list',page=0)}}">List Article<span class="badge badge-secondary">New</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{url_for('art_manager.add_article')}}">Add New Article</a>
@@ -81,7 +81,7 @@
                             <div id="submenu-5" class="collapse submenu"  >
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{url_for('sld_manager.silder_list')}}">List Slider<span class="badge badge-secondary">New</span></a>
+                                        <a class="nav-link" href="{{url_for('sld_manager.silder_list',page=0)}}">List Slider<span class="badge badge-secondary">New</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{url_for('sld_manager.add_slider')}}">Add New Slider</a>
@@ -98,7 +98,7 @@
                             <div id="submenu-6" class="collapse submenu"  >
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{url_for('page.page_list')}}">List Pages<span class="badge badge-secondary">New</span></a>
+                                        <a class="nav-link" href="{{url_for('page.page_list',page=0)}}">List Pages<span class="badge badge-secondary">New</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{url_for('page.add_page')}}">Add New Pages</a>

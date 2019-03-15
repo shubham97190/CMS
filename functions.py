@@ -84,7 +84,6 @@ def slug(text, delim=u'-'):
     result = []
 
     for word in _punct_re.split(text.lower()):
-        # word = word.encode('translit/long')
         if word:
             result.append(word)
 
@@ -95,9 +94,16 @@ def retrive(tables):
     myresult=""
     try:
         my_db.connection()
-        sql = "select * from "+tables  # +" where id=17"
-        #  val = (tables,)
-        my_db.cur.execute(sql)
+        sql=''
+        if tables is 'page_tbl' or tables is 'category_tbl':
+            sql = "select * from "+tables
+            my_db.cur.execute(sql)
+        else:
+            print(tables)
+            status = ('yes',)
+            sql = "select * from "+tables+" WHERE status = %s"
+            my_db.cur.execute(sql,status)
+            
         myresult = my_db.cur.fetchall()
 
     except Exception as err:
@@ -112,7 +118,7 @@ def filter_article(id):
     myresult = ""
     try:
         my_db.connection()
-        sql = "select * from  article_tbl where categary_id=%s" # +" where id=17"
+        sql = "select * from  article_tbl where categary_id=%s" 
         val = (id,)
         my_db.cur.execute(sql,val)
         myresult = my_db.cur.fetchall()

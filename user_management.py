@@ -1,5 +1,5 @@
 import my_db
-from functions import *
+from functions import lower_error,upcase_error,hash_password,digit_error,symbol_error, email_error,get_conutry
 from flask import session, render_template, request, redirect, url_for, Blueprint, json, flash, make_response
 import mysql.connector
 
@@ -207,10 +207,15 @@ def list_user():
         myresult = "na"
         try:
             my_db.connection()
-            my_db.cur.execute("SELECT * FROM reg_tbl")
+            my_db.cur.execute("SELECT count(*) FROM reg_tbl")
+            total_row=my_db.cur.fetchall()
+            # dict(total_row)
+            print(type(total_row),len(total_row) ,total_row )  
+            my_db.cur.execute("SELECT * FROM reg_tbl LIMIT 2 OFFSET 1")
             myresult = my_db.cur.fetchall()
-            print(type(myresult))
-        except:
+            # print(total_row)
+        except Exception as err:
+            print(err)
             my_db.conn.rollback()
 
         finally:

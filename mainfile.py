@@ -26,7 +26,7 @@ app.secret_key = "b'\x95\x12Y\x97\xcd\x07>\x00J\xcc\x91\x17'"
 
 @app.route('/')
 def home():
-    return render_template('homepages/home.html',myresults=retrive('article_tbl'))
+    return render_template('homepages/home.html',myresults=retrive('slider_tbl'))
 
 
 @app.route('/about')
@@ -47,4 +47,4 @@ def article():
 if __name__ == "__main__":
 
     print(os.urandom(12))
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0')

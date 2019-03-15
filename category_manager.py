@@ -20,6 +20,11 @@ def category_list():
             my_db.connection()
             sql = "SELECT * FROM category_tbl "
             my_db.cur.execute(sql)
+            # total_row = my_db.cur.rowcount
+            # print("ujfyearuifgewfkjai           ",total_row) 
+            # my_db.conn.commit()
+            
+            # my_db.cur.execute("SELECT * FROM category_tbl")
             myresult = my_db.cur.fetchall()
 
         except mysql.connector.Error as err:

@@ -48,21 +48,28 @@
             
               <!-- Wrapper for slides -->
               <div class="carousel-inner" role="listbox">
+                  {% for sece in myresults %}
                 <div class="item active">
-                  <img src="..." alt="...">
+                 
+                  <img class="min_and_max" src="{{ url_for('sld_manager.get_slider_image_path', filename=sece.image) }}" alt="...">
                   <div class="carousel-caption">
                     ...
                   </div>
+                 
                 </div>
+               
+                {%endfor%}
                 <div class="item">
-                  <img src="..." alt="...">
+                  <img src="" alt="...">
                   <div class="carousel-caption">
                     ...
                   </div>
                 </div>
                 ...
+              
               </div>
-            
+              
+
               <!-- Controls -->
               <a class="left carousel-control" href="#slider" role="button" data-slide="prev">
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
