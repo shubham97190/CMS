@@ -61,6 +61,7 @@ def add_page():
 def page_list():
     if 'username' in session:
         total_page = 0
+        myresult=""
         try:
             page = request.args.get('page')
             my_db.connection()
@@ -82,7 +83,9 @@ def page_list():
             my_db.conn.rollback()
         finally:
             my_db.conn.close()
-        return render_template('/page-manager/page_list.html',sec=session['username'],  myresult=myresult, total_page=total_page)
+        print(myresult)
+        return render_template('/page-manager/page_list.html', sec=session['username'],  myresult=myresult,
+                               total_page=total_page)
     return render_template('/homepages/login.htm')
 
 

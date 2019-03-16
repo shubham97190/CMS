@@ -76,10 +76,10 @@
                                         
                                         <td>{{sece.slug}}</td>
                                         <td>
-                                            <a title="Edit Record" class="btn btn-info btn-circle" href="{{url_for('page.edit',id=sece.id)}}" >
+                                            <a title="Edit Record" class="btn btn-info " href="{{url_for('page.edit',id=sece.id)}}" >
                                                 <i class="fa fa-pencil "></i>
                                             </a>
-                                            <a title="Delete Record" class="delete-link btn btn-danger btn-circle" href="javascript: void(0);" data-id={{sece.id}}>
+                                            <a title="Delete Record" class="delete-link btn btn-danger " href="javascript: void(0);" data-id={{sece.id}}>
                                                     <i class="fa fa-trash "></i>
 
                                             </a>
@@ -90,13 +90,13 @@
                                 </tbody>
 
                             </table>
-                            {%if request.args.get('page') != '0'%}
-                            <a title="Previous" class="previous btn btn-circle" href="{{url_for('page.page_list',page=0)}}" data-id="">
+                            {%if request.args.get('page')|int != 0%}
+                            <a title="Previous" class="previous btn " href="{{url_for('page.page_list',page=request.args.get('page')|int-1 )}}" data-id="">
                                 <h1>&lt;</h1>
                             </a>
                             {%endif%}
-                            {%if request.args.get('page') != 'total_page'%}
-                            <a title="Next" class="next btn btn-circle" href="{{url_for('page.page_list',page=0)}}" data-id="">
+                            {%if request.args.get('page')|int < total_page%}
+                            <a title="Next" class="next btn " href="{{url_for('page.page_list',page=request.args.get('page')|int+1 )}}" data-id="">
                                 <h1>&gt;</h1>
                             </a>
                             {%endif%}
