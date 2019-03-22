@@ -83,7 +83,7 @@ def page_list():
             my_db.conn.rollback()
         finally:
             my_db.conn.close()
-        print(myresult)
+        
         return render_template('/page-manager/page_list.html', sec=session['username'],  myresult=myresult,
                                total_page=total_page)
     return render_template('/homepages/login.htm')

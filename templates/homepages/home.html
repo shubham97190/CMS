@@ -6,6 +6,9 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
       <link rel="stylesheet" href="{{ url_for('static', filename = 'css/homestylee.css') }} ">
+      <link rel="stylesheet" href="{{ url_for('static', filename = 'css/owl.carousel.css') }} ">
+      <link rel="stylesheet" href="{{ url_for('static', filename = 'css/owl.theme.default.css') }} ">
+      
     </head>
 
     <body>
@@ -36,51 +39,13 @@
         </nav>
 
         <div class="container-fluid text-center">
-          <div class="row content">
+            <div class="row content">
+            {% for sece in myresults %}
             
-            <div id="slider" class="carousel slide" data-ride="carousel">
-              <!-- Indicators -->
-              <ol class="carousel-indicators">
-                <li data-target="#slider" data-slide-to="0" class="active"></li>
-                <li data-target="#slider" data-slide-to="1"></li>
-                <li data-target="#slider" data-slide-to="2"></li>
-              </ol>
-            
-              <!-- Wrapper for slides -->
-              <div class="carousel-inner" role="listbox">
-                  {% for sece in myresults %}
-                <div class="item active">
-                 
-                  <img class="min_and_max" src="{{ url_for('sld_manager.get_slider_image_path', filename=sece.image) }}" alt="...">
-                  <div class="carousel-caption">
-                    ...
-                  </div>
-                 
-                </div>
-               
-                {%endfor%}
-                <div class="item">
-                  <img src="" alt="...">
-                  <div class="carousel-caption">
-                    ...
-                  </div>
-                </div>
-                ...
-              
-              </div>
-              
-
-              <!-- Controls -->
-              <a class="left carousel-control" href="#slider" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="right carousel-control" href="#slider" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
+            <div id="owl-carousel-1" class="owl-carousel owl-theme center-owl-nav">
+                <img src="{{ url_for('sld_manager.get_slider_image_path', filename=sece.image) }}" alt="">
             </div>
-
+            {%endfor%}
           </div>
 
         </div>
@@ -117,7 +82,24 @@
         </footer>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    </body>
+        
+        <script src = "{{ url_for('static', filename = 'js/owl.carousel.min.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+              var owl = $('.owl-carousel');
+              owl.owlCarousel({
+                items: 1,
+                loop: true,
+                // margin: 10,
+                autoplay: true,
+                autoplayTimeout: 1000,
+                autoplayHoverPause: true
+              });
+            })
+          </script>
+        
+        
+      </body>
 
 
 </html>
