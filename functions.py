@@ -101,7 +101,6 @@ def retrive(tables):
             sql = "select * from "+tables
             my_db.cur.execute(sql)
         else:
-            print(tables)
             status = ('yes',)
             sql = "select * from "+tables+" WHERE status = %s"
             my_db.cur.execute(sql,status)

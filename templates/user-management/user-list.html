@@ -95,7 +95,7 @@
                                             <h1>&lt;</h1>
                                         </a>
                                         {%endif%}
-                                        {% if request.args.get('page')|int < total_page %}
+                                        {% if request.args.get('page')|int < total_page-1 %}
                                         
                                         <a title="Next" class="next btn " href="{{url_for('auth.list_user',page=request.args.get('page')|int+1 )}}" >
                                             <h1>&gt;</h1>

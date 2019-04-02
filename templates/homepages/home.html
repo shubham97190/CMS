@@ -40,10 +40,10 @@
 
         <div class="container-fluid text-center">
             <div class="row content">
-            {% for sece in myresults %}
+            {% for row in myresults %}
             
             <div id="owl-carousel-1" class="owl-carousel owl-theme center-owl-nav">
-                <img src="{{ url_for('sld_manager.get_slider_image_path', filename=sece.image) }}" alt="">
+                <img src="{{ url_for('sld_manager.get_slider_image_path', filename=row.image) }}" alt="">
             </div>
             {%endfor%}
           </div>

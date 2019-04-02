@@ -18,6 +18,7 @@ def category_list():
     if 'username' in session:
         myresult = ''
         total_page = 0
+        # temp=1.5
         try:
             page = request.args.get('page')
             my_db.connection()
@@ -25,12 +26,12 @@ def category_list():
             sql = "SELECT count(id) FROM category_tbl "
             my_db.cur.execute(sql)
             total_row = my_db.cur.fetchall()
-
             no_of_row = total_row[0]['count(id)']
             page_size = 2
+            
+
             total_page = ceil(no_of_row / page_size)
             starting_row = page_size * int(page)
-
             my_db.cur.execute("SELECT * FROM category_tbl LIMIT " + str(page_size) + " OFFSET " + str(starting_row))
 
             myresult = my_db.cur.fetchall()
