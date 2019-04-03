@@ -27,13 +27,39 @@ def category():
     return myresult
 
 
+def update_query():
+    result=""
+    count=0
+    try:
+        my_db.connection()
+        sql = "SELECT * FROM article_tbl ORDER BY order_step ASC"
+        my_db.cur.execute(sql)
+        result = my_db.cur.fetchall()
+        for row in result:
+            count= count+1
+            sql = "UPDATE article_tbl SET order_step=%s WHERE id=%s"
+            val=(str(count),row['id'],)
+            my_db.cur.execute(sql, val)
+            my_db.conn.commit()
+    except Exception as err:
+        print(err)
+        my_db.conn.rollback()
+
+    finally:
+        my_db.conn.close()
+    return True
+
+
 @art_manager.route('/admin/article/list_article')
 def article_list():
     if 'username' in session:
         myresult = ""
         total_page = 0
+        page = 0
         try:
-            page = request.args.get('page')
+            if request.args.get('page'): 
+                page = request.args.get('page')
+
             my_db.connection()
 
             sql = "SELECT count(id) FROM article_tbl "
@@ -43,9 +69,10 @@ def article_list():
             no_of_row = total_row[0]['count(id)']
             page_size = 2
             total_page = ceil(no_of_row/page_size)
+            
             starting_row = page_size*int(page)
 
-            my_db.cur.execute("SELECT * FROM article_tbl LIMIT "+str(page_size)+" OFFSET "+str(starting_row))
+            my_db.cur.execute("SELECT * FROM article_tbl ORDER BY order_step ASC LIMIT "+str(page_size)+" OFFSET "+str(starting_row)+"")
 
             myresult = my_db.cur.fetchall()
         except Exception as err:
@@ -140,6 +167,7 @@ def article_delete():
 
         my_db.cur.execute(sql, val)
         my_db.conn.commit()
+        update_query()
     except Exception as err:
         print(err)
         my_db.conn.rollback()
@@ -166,7 +194,7 @@ def edit():
             if myresult is not  None:
                 old_image = myresult['image']
                 old_file = myresult['file_upload']
-                print("old",old_file)
+                
             my_db.conn.commit()
         except Exception as err:
             print(err)
@@ -267,3 +295,29 @@ def get_article_image_path(filename):
     return uploaded(art.config['UPLOAD_FOLDER'], filename)
 
 
+@art_manager.route('/article_order', methods=['POST', 'GET'])
+def article_order():
+    id = request.args.get('id')
+    action = request.args.get('title')
+    order = request.args.get('order')
+    oder_step=""
+    try:
+        my_db.connection()
+        if action == 'UP':
+            oder_step = str(float(order) - 1.5)
+            
+        else:
+            oder_step = str(float(order) + 1.5)
+
+        sql = "UPDATE article_tbl SET order_step=%s WHERE id=%s"
+        val=(oder_step,id)
+        my_db.cur.execute(sql, val)
+        my_db.conn.commit()
+        update_query()
+       
+    except Exception as err:
+        print(err)
+        my_db.conn.rollback()
+    finally:
+        my_db.conn.close()
+    return json.dumps({"type": "error"})

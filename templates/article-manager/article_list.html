@@ -65,6 +65,7 @@
 
                                 <thead>
                                     <tr>
+                                        <th>Order</th>
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Image</th>
@@ -73,11 +74,22 @@
 
                                     </tr>
                                 </thead>
-                                <tbody>
-
+                                <tb>
                                     {% for sece in myresult %}
+                                    
                                     <tr>
-
+                                        {% set order1 = sece.order_step|string%}
+                                        {% set order=order1.split('.') %}
+                                       
+                                        <td>
+                                            {% if loop.index > 1%}
+                                            <a title="UP" class="action" href="javascript: void(0);" data-id='{{sece.id}}' data-val="{{order1}}"><i class="fa fa-arrow-up"></i></a>
+                                            {%endif%}
+                                            {{order[0]}}
+                                            {% if loop.index < loop.length %}
+                                            <a title="DOWN" class="action" href="javascript: void(0);" data-id='{{sece.id}}' data-val="{{order1}}"><i class="fa fa-arrow-down "></i></a>
+                                            {%endif%}
+                                        </td>
                                         <td>{{sece.title}}</td>
                                         <td class="lod" data-id="{{sece.description}}"></td>
                                         <td><img class="min_and_max" src="{{ url_for('art_manager.get_article_image_path', filename=sece.image) }}"style="width: 2280px; height: 150px;"></td>
@@ -91,7 +103,6 @@
 
                                             </a>
                                         </td>
-
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -136,9 +147,8 @@
                         dataType:'json',
                         success:function(response){
                             if(response.type == 'error'){
-                                window.location.href="http://127.0.0.1:5000/admin/article/list_article";
+                            window.location.href=window.location.href;                                
                             }
-
                         },
                         error:function(error){
                             console.log(error)
@@ -148,11 +158,34 @@
 
                 }
             });
-            $('.lod').each(function (value) {
+            
+            jQuery('.lod').each(function (value) {
                 //console.log('.lod' + index + ':' + $(this).attr('data-id'));
                 jQuery(this).html($(this).attr('data-id'));
             });
 
+            jQuery(document).on('click','.action',function(){
+                var id=jQuery(this).attr('data-id');
+                var title=jQuery(this).attr('title');
+                var order=jQuery(this).attr('data-val');
+                $.ajax({
+                    url:'/article_order',
+                    data:{id:id,title:title,order:order},
+                    type:'GET',
+                    dataType:'json',
+                    success:function(response){
+                        if(response.type == 'error'){
+                            window.location.href=window.location.href;
+                            
+                        }
+                    },
+                    error:function(error){
+                        console.log(error)
+                    }
+
+                });
+            });
         });
+        
      </script>
     {% endblock %}

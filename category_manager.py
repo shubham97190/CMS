@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 import my_db
 import mysql.connector
-from functions import uploaded, delete, file_upload
+from functions import uploaded, delete, file_upload,update_query
 from math import ceil
 
 cat = Flask(__name__)
@@ -179,6 +179,7 @@ def category_delete():
 
         my_db.cur.execute(sql, val)
         my_db.conn.commit()
+        update_query('category_tbl')
     except mysql.connector.Error as err:
         print((err))
         my_db.conn.rollback()
@@ -193,4 +194,30 @@ def get_category_image_path(filename):
 
     return uploaded(cat.config['UPLOAD_FOLDER'], filename)
 
+@cat_manager.route('/category_order', methods=['POST', 'GET'])
+def category_order():
+    id = request.args.get('id')
+    action = request.args.get('title')
+    order = request.args.get('order')
+    oder_step=""
+    try:
+        my_db.connection()
+        if action == 'UP':
+            oder_step = str(float(order) - 1.5)
+            
+        else:
+            oder_step = str(float(order) + 1.5)
+
+        sql = "UPDATE category_tbl SET order_step=%s WHERE id=%s"
+        val=(oder_step,id)
+        my_db.cur.execute(sql, val)
+        my_db.conn.commit()
+        update_query('category_tbl')
+       
+    except Exception as err:
+        print(err)
+        my_db.conn.rollback()
+    finally:
+        my_db.conn.close()
+    return json.dumps({"type": "error"})
 

@@ -131,6 +131,28 @@ def filter_article(id):
         my_db.conn.close()
     return json.dumps({"type": "fliter", "result":  myresult})
 
+def update_query(table_name):
+    result=""
+    count=0
+    try:
+        my_db.connection()
+        sql = "SELECT * FROM "+table_name+" ORDER BY order_step ASC"
+        my_db.cur.execute(sql)
+        result = my_db.cur.fetchall()
+        for row in result:
+            count= count+1
+            sql = "UPDATE "+table_name+" SET order_step=%s WHERE id=%s"
+            val=(str(count),row['id'],)
+            my_db.cur.execute(sql, val)
+            my_db.conn.commit()
+    except Exception as err:
+        print(err)
+        my_db.conn.rollback()
+
+    finally:
+        my_db.conn.close()
+    return True
+
 
 class Pagination(object):
 
